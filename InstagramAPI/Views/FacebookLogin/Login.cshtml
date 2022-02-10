@@ -1,0 +1,80 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h1>Devam etmek için lütfen Facebook ile giriş yapın.</h1>
+    <fb:login-button scope="public_profile,email,instagram_basic,pages_read_engagement,pages_show_list,business_management,instagram_manage_comments"
+                     onlogin="checkLoginState();">
+    </fb:login-button>
+    <div id="authStatus"></div>
+
+    <script>
+
+        window.fbAsyncInit = function () {
+
+            FB.init({
+                appId: '272736491269507',
+                cookie: true,
+                xfbml: true,
+                version: 'v11.0'
+            });
+
+            FB.AppEvents.logPageView();
+
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+
+
+        function checkLoginState() {
+            FB.getLoginStatus(function (response) {
+                $("#authStatus").html("<code>" + JSON.stringify(response, null, 2) + "</code>")
+            });
+            FB.getLoginStatus(function (response) {
+                if (response.status === 'connected') {                  
+                    var accessToken = response.authResponse.accessToken;
+                    var userID = response.authResponse.userID;
+                    var data_access_expiration_time = response.authResponse.data_access_expiration_time;
+                  //  $.get("https://localhost:44334/Instagram/GetAccessToken", { accessToken: accessToken, userID: userID, data_access_expiration_time: data_access_expiration_time });
+                    $.get("https://localhost:44334/Instagram/GetPagesOfAccessTokensOwner", { accessToken: accessToken, userID: userID, data_access_expiration_time: data_access_expiration_time });
+                }
+            });
+
+        }
+                /* const { MongoClient } = require("mongodb");
+           const uri = "mongodb://localhost:27017";
+           const client = new MongoClient(uri);
+           async function run() {
+               try {
+                   await client.connect();
+                   const database = client.db("InstagramDatabase");
+                   const doc = { accessToken: `${accessToken}` };
+                   const result = await insertOne(doc);
+                   console.log(`${result.insertedCount} documents were inserted with the _id: ${result.insertedId}`,);
+               }
+               finally {
+                   await client.close();
+               }
+           }
+           run().catch(console.dir);
+           */
+    </script>
+
+</body>
+
+</html>

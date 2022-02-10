@@ -1,0 +1,129 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <style>
+        form {
+            border: 3px solid #f1f1f1;
+        }
+
+        /* Full-width inputs */
+        input[type=text], input[type=password] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Set a style for all buttons */
+        button {
+            background-color: #04AA6D;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            /* Add a hover effect for buttons */
+            button:hover {
+                opacity: 0.8;
+            }
+
+        /* Extra style for the cancel button (red) */
+        .cancelbtn {
+            width: auto;
+            padding: 10px 18px;
+            background-color: #f44336;
+        }
+
+        /* Center the avatar image inside this container */
+        .imgcontainer {
+            text-align: center;
+            margin: 24px 0 12px 0;
+        }
+
+        /* Avatar image */
+        img.avatar {
+            width: 40%;
+            border-radius: 50%;
+        }
+
+        /* Add padding to containers */
+        .container {
+            padding: 16px;
+        }
+
+        /* The "Forgot password" text */
+        span.psw {
+            float: right;
+            padding-top: 16px;
+        }
+       
+    </style>
+    <title>User Login</title>
+    
+</head>
+<body>
+    <div class="imgcontainer">
+        <img src="https://res.cloudinary.com/instagramapi/image/upload/v1629458921/ICop-logos_hiw3yy.jpg" alt="Logo" class="avatar" width="100" height="300">
+    </div>
+    <div class="container">
+        <label ><b>E Mail Address</b></label>
+        <input type="text" placeholder="Enter Username" name="mail" id="mail">
+
+        <label ><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" name="password" id="password" >
+
+        <button id="btn" type="button">Login</button>
+        <div style="width:500px;height:100px">
+            <a style="width:100%;height:100%;background-color:green;color:white" asp-controller="Home" asp-action="Register">REgister</a>
+        </div>
+       
+
+        <label>
+            <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+        <button type="button" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript">              
+        $('#btn').click(function () {           
+            var mail = $('#mail').val();
+            var password = $('#password').val();
+            var formData = { mail: mail, password: password };
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: "https://localhost:44334/UserLogin/Login",
+                data: formData,
+                success: function () {
+                    alert("login successful");
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });          
+        });
+    </script>
+   
+</body>
+
+</html>
+
